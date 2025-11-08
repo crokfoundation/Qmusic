@@ -48,7 +48,6 @@ body {
     transform: translateY(100%);
     transition: transform 0.3s ease;
     z-index: 50;
-    position: relative; /* (신규) 미니 재생바 기준 */
     padding-top: 4px; /* (신규) 미니 재생바 공간 */
 }
 
