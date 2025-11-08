@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrokMusic</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="app-header">
+            <div class="search-bar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="search" id="search-input" placeholder="곡 제목 또는 작곡가 검색...">
+            </div>
+        </header>
+
+        <main class="app-content">
+            <section class="music-section" id="top-10">
+                <h2>최신 Top 10</h2>
+                <div class="music-list" id="top-10-list"></div>
+            </section>
+            <section class="music-section" id="all-music">
+                <h2>전체 음악</h2>
+                <div class="music-list" id="all-music-list"></div>
+            </section>
+        </main>
+
+        <footer class="player-bar" id="player-bar">
+            
+            <div class="progress-bar-mini" id="progress-bar-mini">
+                <div class="progress-mini-played" id="progress-mini-played"></div>
+            </div>
+
+            <div class="player-info" id="player-info-clickable">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Album Art" class="player-cover" id="player-cover">
+                <div class="player-text">
+                    <div class="player-title" id="player-title">선택된 곡 없음</div>
+                    <div class="player-artist" id="player-artist"></div>
+                </div>
+            </div>
+            <button class="play-pause-btn" id="play-pause-btn">
+                <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                <svg id="pause-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>
+            </button>
+        </footer>
+
+        <audio id="audio-player"></audio>
+    </div>
+
+
+    <div class="player-modal" id="player-modal">
+        <button class="modal-close-btn" id="modal-close-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"></path></svg>
+        </button>
+
+        <div class="modal-content">
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Album Art" class="modal-cover" id="modal-cover">
+            
+            <div class="modal-song-info">
+                <div class="modal-title" id="modal-title">선택된 곡 없음</div>
+                <div class="modal-artist" id="modal-artist"></div>
+            </div>
+
+            <div class="progress-container-modal" id="progress-container-modal">
+                <div class="progress-time">
+                    <span id="modal-current-time">0:00</span>
+                    <span id="modal-total-time">0:00</span>
+                </div>
+                <div class="progress-bar-modal" id="progress-bar-modal">
+                    <div class="progress-modal-played" id="progress-modal-played"></div>
+                    <div class="progress-modal-thumb" id="progress-modal-thumb"></div>
+                </div>
+            </div>
+
+            <div class="modal-controls">
+                <button class="control-btn" id="modal-shuffle-btn" title="셔플">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L15 20h5.5v-5.5l-2.04 2.04-3.13-3.13z"></path></svg>
+                </button>
+                <button class="control-btn" id="modal-prev-btn" title="이전 곡">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6l-8.5 6z"></path></svg>
+                </button>
+                <button class="control-btn play-pause-main" id="modal-play-pause-btn" title="재생/일시정지">
+                    <svg id="modal-play-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                    <svg id="modal-pause-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>
+                </button>
+                <button class="control-btn" id="modal-next-btn" title="다음 곡">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zm9.5-6H18v12h-2.5V6z"></path></svg>
+                </button>
+                <button class="control-btn" id="modal-repeat-btn" title="반복">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"></path></svg>
+                </button>
+            </div>
+
+            <div class="modal-volume">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-.72-3.39-1.89-4.56l-1.42 1.42c.73.73 1.16 1.71 1.16 2.79s-.43 2.06-1.16 2.79l1.42 1.42A6.45 6.45 0 0 0 16.5 12zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path></svg>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+            </div>
+
+            <div class="playlist-queue-container" id="playlist-queue-container">
+                <h3>다음 트랙</h3>
+                <div class="playlist-queue" id="playlist-queue">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
